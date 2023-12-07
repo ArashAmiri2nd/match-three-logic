@@ -64,23 +64,24 @@ namespace MatchThreeLogic
             }
         }
 
-        // private List<List<BaseTile>> GetAllMatchedTiles()
-        // {
-        //     var matches = new List<List<BaseTile>>();
-        //     foreach (var tile in Tiles)
-        //     {
-        //         var matchedTiles = GetMatchedTiles(tile);
-        //         if (matchedTiles.Count == 0)
-        //             continue;
-        //
-        //         // this might not behave the way I expect
-        //         if (!matches.Exists(m => m.SequenceEqual(matchedTiles)))
-        //             matches.Add(matchedTiles);
-        //     }
-        //     //todo => remove duplicates here
-        //
-        //     return matches;
-        // }
+        private List<List<BaseTile>> GetAllMatchedTiles()
+        {
+            var matches = new List<List<BaseTile>>();
+            foreach (var tile in Tiles)
+            {
+                var matchedTiles = GetMatchedTiles(tile);
+                if (matchedTiles.Count == 0)
+                    continue;
+        
+                // this might not behave the way I expect
+                var hashsetMatches = new HashSet<BaseTile>(matchedTiles);
+                if (!matches.Any(m => hashsetMatches.SetEquals(new HashSet<BaseTile>(m))))
+                    matches.Add(matchedTiles);
+            }
+            //todo => remove duplicates here
+        
+            return matches;
+        }
 
         private List<BaseTile> GetMatchedTiles(BaseTile tile)
         {
@@ -264,7 +265,14 @@ namespace MatchThreeLogic
             }
             
             OnUpdated?.Invoke();
-            
+
+            var allMatchedTiles = GetAllMatchedTiles();
+
+            Console.WriteLine(allMatchedTiles.Count);
+            foreach (var matchedTiles in allMatchedTiles)
+                MatchTiles(matchedTiles, matchedTiles.First().X, matchedTiles.First().Y);
+
+            OnUpdated?.Invoke();
             //todo CHECK FOR MATCHES AND TRY AGAIN
         }
 
