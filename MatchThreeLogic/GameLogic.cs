@@ -8,10 +8,15 @@ namespace MatchThreeLogic
         private Board Board { get; set; }
         public BaseTile[,] Tiles => Board.Tiles;
 
+        public event Action OnBoardUpdated;
+
         public GameLogic(GameSettings settings)
         {
             Board = new Board(settings);
+            Board.OnUpdated += BroadcastBoardUpdate;
         }
+
+        private void BroadcastBoardUpdate() => OnBoardUpdated?.Invoke();
 
         public void MoveTile(int x, int y, Direction direction)
         {
@@ -32,6 +37,8 @@ namespace MatchThreeLogic
             
             Board.MatchTiles(matchedTilesOriginal, x, y);
             Board.MatchTiles(matchedTilesMoved, newPosition.Item1, newPosition.Item2);
+            BroadcastBoardUpdate();
+            
             Board.FillEmptySpaces();
         }
     }

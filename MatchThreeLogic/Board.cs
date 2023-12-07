@@ -9,6 +9,8 @@ namespace MatchThreeLogic
         public BaseTile[,] Tiles { get; private set; }
         private readonly GameSettings _settings;
 
+        public event Action OnUpdated;
+
         public Board(GameSettings settings)
         {
             _settings = settings;
@@ -245,6 +247,9 @@ namespace MatchThreeLogic
 
         public void FillEmptySpaces()
         {
+            
+            // do something
+            OnUpdated?.Invoke();
         }
     }
 }
