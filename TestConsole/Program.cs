@@ -41,7 +41,7 @@ namespace TestConsole
             DrawBoard(logic.Tiles);
         }
 
-        private static void DrawBoard(Tile[,] board)
+        private static void DrawBoard(BaseTile[,] board)
         {
             var drawString = "";
 
