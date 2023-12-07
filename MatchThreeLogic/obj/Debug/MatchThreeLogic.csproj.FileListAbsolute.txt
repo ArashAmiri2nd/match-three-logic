@@ -1,0 +1,12 @@
+/Users/arash/Projects/MatchThreeLogic/MatchThreeLogic/bin/Debug/MatchThreeLogic.dll
+/Users/arash/Projects/MatchThreeLogic/MatchThreeLogic/bin/Debug/MatchThreeLogic.pdb
+/Users/arash/Projects/MatchThreeLogic/MatchThreeLogic/obj/Debug/MatchThreeLogic.csproj.AssemblyReference.cache
+/Users/arash/Projects/MatchThreeLogic/MatchThreeLogic/obj/Debug/MatchThreeLogic.csproj.CoreCompileInputs.cache
+/Users/arash/Projects/MatchThreeLogic/MatchThreeLogic/obj/Debug/MatchThreeLogic.dll
+/Users/arash/Projects/MatchThreeLogic/MatchThreeLogic/obj/Debug/MatchThreeLogic.pdb
+C:\Unity Projects\MatchThreeLogic\MatchThreeLogic\bin\Debug\MatchThreeLogic.dll
+C:\Unity Projects\MatchThreeLogic\MatchThreeLogic\bin\Debug\MatchThreeLogic.pdb
+C:\Unity Projects\MatchThreeLogic\MatchThreeLogic\obj\Debug\MatchThreeLogic.csproj.AssemblyReference.cache
+C:\Unity Projects\MatchThreeLogic\MatchThreeLogic\obj\Debug\MatchThreeLogic.csproj.CoreCompileInputs.cache
+C:\Unity Projects\MatchThreeLogic\MatchThreeLogic\obj\Debug\MatchThreeLogic.dll
+C:\Unity Projects\MatchThreeLogic\MatchThreeLogic\obj\Debug\MatchThreeLogic.pdb
