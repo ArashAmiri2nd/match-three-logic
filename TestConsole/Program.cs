@@ -10,6 +10,8 @@ namespace TestConsole
             var settings = new GameSettings(5, 5, 3,Direction.Down);
 
             var logic = new GameLogic(settings);
+            logic.OnBoardUpdated += ()=> DrawBoard(logic.Tiles);
+            
             DrawBoard(logic.Tiles);
             ReceiveInput(logic);
         }
@@ -38,7 +40,7 @@ namespace TestConsole
             }
             
             logic.MoveTile(x, y, direction);
-            DrawBoard(logic.Tiles);
+            // DrawBoard(logic.Tiles);
         }
 
         private static void DrawBoard(BaseTile[,] board)

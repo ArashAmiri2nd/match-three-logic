@@ -39,7 +39,7 @@ namespace MatchThreeLogic
             Board.MatchTiles(matchedTilesMoved, newPosition.Item1, newPosition.Item2);
             BroadcastBoardUpdate();
             
-            Board.FillEmptySpaces();
+            Board.FillEmptyTiles();
         }
     }
 }

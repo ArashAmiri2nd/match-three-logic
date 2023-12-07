@@ -245,11 +245,43 @@ namespace MatchThreeLogic
             return adjacentTile != null && adjacentTile.IsMovable();
         }
 
-        public void FillEmptySpaces()
+        public void FillEmptyTiles()
         {
+            var emptyTiles = GetEmptyTiles();
+
+            foreach (var emptyTile in emptyTiles)
+            {
+                while (IsMoveValid(emptyTile.X, emptyTile.Y, _settings.Gravity.GetOpposing()))
+                    MoveTile(emptyTile.X, emptyTile.Y, _settings.Gravity.GetOpposing());
+            }
+
+            var random = new Random();
+            emptyTiles = GetEmptyTiles();
+            foreach (var emptyTile in emptyTiles)
+            {
+                Tiles[emptyTile.X, emptyTile.Y] = new NormalTile(emptyTile.X, emptyTile.Y,
+                    random.Next(0, _settings.NumberOfTileColors));
+            }
             
-            // do something
             OnUpdated?.Invoke();
+            
+            //todo CHECK FOR MATCHES AND TRY AGAIN
+        }
+
+        private List<BaseTile> GetEmptyTiles()
+        {
+            var emptyTiles = new List<BaseTile>();
+
+            for (int i = 0; i < Tiles.GetLength(0); i++)
+            {
+                for (int j = 0; j < Tiles.GetLength(1); j++)
+                {
+                    if (Tiles[i, j] is EmptyTile)
+                        emptyTiles.Add(Tiles[i, j]);
+                }
+            }
+
+            return emptyTiles;
         }
     }
 }
