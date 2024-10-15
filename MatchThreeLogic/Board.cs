@@ -49,19 +49,25 @@ namespace MatchThreeLogic
             }
         }
 
+        private int count = 0;
         private void ResolveImmediateMatches()
         {
             for (var i = 0; i < Tiles.GetLength(0); i++)
             {
                 for (var j = 0; j < Tiles.GetLength(1); j++)
                 {
-                    while (GetMatchedTiles(Tiles[i, j]).Count != 0)
+                    if (GetMatchedTiles(Tiles[i, j]).Count != 0)
                     {
+                        count++;
                         Tiles[i, j].AvoidImmediateMatch(_settings.NumberOfTileColors);
+                        ResolveImmediateMatches();
+                        return;
                         // Tiles[i, j]. = new NormalTile(((Tiles[i, j]).Type + 1) % _settings.NumberOfTileColors, i, j);
                     }
                 }
             }
+            
+            Console.WriteLine(count);
         }
 
         private List<List<BaseTile>> GetAllMatchedTiles()
@@ -79,7 +85,6 @@ namespace MatchThreeLogic
                     matches.Add(matchedTiles);
             }
             //todo => remove duplicates here
-        
             return matches;
         }
 

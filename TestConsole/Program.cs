@@ -40,7 +40,7 @@ namespace TestConsole
             }
             
             logic.MoveTile(x, y, direction);
-            // DrawBoard(logic.Tiles);
+            DrawBoard(logic.Tiles);
         }
 
         private static void DrawBoard(BaseTile[,] board)

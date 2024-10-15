@@ -17,3 +17,12 @@ C:\Unity Projects\MatchThreeLogic\TestConsole\obj\Debug\TestConsole.csproj.CoreC
 C:\Unity Projects\MatchThreeLogic\TestConsole\obj\Debug\TestConsole.csproj.CopyComplete
 C:\Unity Projects\MatchThreeLogic\TestConsole\obj\Debug\TestConsole.exe
 C:\Unity Projects\MatchThreeLogic\TestConsole\obj\Debug\TestConsole.pdb
+C:\Projects\Console\match-three-logic\TestConsole\bin\Debug\TestConsole.exe
+C:\Projects\Console\match-three-logic\TestConsole\bin\Debug\TestConsole.pdb
+C:\Projects\Console\match-three-logic\TestConsole\bin\Debug\MatchThreeLogic.dll
+C:\Projects\Console\match-three-logic\TestConsole\bin\Debug\MatchThreeLogic.pdb
+C:\Projects\Console\match-three-logic\TestConsole\obj\Debug\TestConsole.csproj.AssemblyReference.cache
+C:\Projects\Console\match-three-logic\TestConsole\obj\Debug\TestConsole.csproj.CoreCompileInputs.cache
+C:\Projects\Console\match-three-logic\TestConsole\obj\Debug\TestConsole.csproj.CopyComplete
+C:\Projects\Console\match-three-logic\TestConsole\obj\Debug\TestConsole.exe
+C:\Projects\Console\match-three-logic\TestConsole\obj\Debug\TestConsole.pdb
