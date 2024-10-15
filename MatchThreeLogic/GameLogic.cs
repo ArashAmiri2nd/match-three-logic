@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MatchThreeLogic
+﻿namespace MatchThreeLogic
 {
     public class GameLogic
     {
-        private Board Board { get; set; }
-        public BaseTile[,] Tiles => Board.Tiles;
+        private Board Board { get; }
+        private IGameListener GameListener { get; }
 
-        public event Action OnBoardUpdated;
-
-        public GameLogic(GameSettings settings)
+        public GameLogic(GameSettings settings, IGameListener gameListener)
         {
             Board = new Board(settings);
-            Board.OnUpdated += BroadcastBoardUpdate;
+            GameListener = gameListener;
         }
-
-        private void BroadcastBoardUpdate() => OnBoardUpdated?.Invoke();
 
         public void MoveTile(int x, int y, Direction direction)
         {
@@ -34,11 +27,11 @@ namespace MatchThreeLogic
                 Board.MoveTile(newPosition.Item1, newPosition.Item2, direction.GetOpposing());
                 return;
             }
-            
+
             Board.MatchTiles(matchedTilesOriginal, x, y);
             Board.MatchTiles(matchedTilesMoved, newPosition.Item1, newPosition.Item2);
-            BroadcastBoardUpdate();
-            
+            GameListener.OnBoardUpdate(Board);
+
             Board.FillEmptyTiles();
         }
     }

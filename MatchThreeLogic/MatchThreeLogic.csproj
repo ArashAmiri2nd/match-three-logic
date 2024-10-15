@@ -46,6 +46,7 @@
         <Compile Include="EmptyTile.cs" />
         <Compile Include="GameLogic.cs" />
         <Compile Include="GameSettings.cs" />
+        <Compile Include="IGameListener.cs" />
         <Compile Include="MissileTile.cs" />
         <Compile Include="MoveResult.cs" />
         <Compile Include="NormalTile.cs" />
