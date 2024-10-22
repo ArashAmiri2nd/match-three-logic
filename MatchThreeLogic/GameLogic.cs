@@ -1,6 +1,8 @@
-﻿namespace MatchThreeLogic
+﻿using System;
+
+namespace MatchThreeLogic
 {
-    public class GameLogic
+    public class GameLogic : IDisposable
     {
         private Board Board { get; }
         private IGameListener GameListener { get; }
@@ -9,6 +11,8 @@
         {
             Board = new Board(settings);
             GameListener = gameListener;
+
+            Board.OnUpdated += RaiseBoardChange;
         }
 
         public void MoveTile(int x, int y, Direction direction)
@@ -30,9 +34,17 @@
 
             Board.MatchTiles(matchedTilesOriginal, x, y);
             Board.MatchTiles(matchedTilesMoved, newPosition.Item1, newPosition.Item2);
-            GameListener.OnBoardUpdate(Board);
-
             Board.FillEmptyTiles();
+        }
+        
+        public void Dispose()
+        {
+            Board.OnUpdated -= RaiseBoardChange;
+        }
+
+        private void RaiseBoardChange()
+        {
+            GameListener?.OnBoardUpdate(Board);
         }
     }
 }

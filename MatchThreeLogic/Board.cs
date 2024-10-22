@@ -14,20 +14,7 @@ namespace MatchThreeLogic
         public Board(GameSettings settings)
         {
             _settings = settings;
-            // InitializeBoardPredefined();
             InitializeRandomBoard();
-        }
-
-        private void InitializeBoardPredefined()
-        {
-            Tiles = new BaseTile[,]
-            {
-                { new NormalTile(0, 0,0), new NormalTile(0, 1, 1), new NormalTile(0, 2, 0), new NormalTile(0, 3, 2), new NormalTile(0, 4, 1) },
-                { new NormalTile(1, 0, 1), new NormalTile(1, 1, 0), new NormalTile(1, 2, 0), new NormalTile(1, 3, 0), new NormalTile(1, 4, 0) },
-                { new NormalTile(2, 0, 2), new NormalTile(2, 1, 2), new NormalTile(2, 2, 0), new NormalTile(2, 3, 1), new NormalTile(2, 4, 0) },
-                { new NormalTile(3, 0, 2), new NormalTile(3, 1, 1), new NormalTile(3, 2, 2), new NormalTile(3, 3, 1), new NormalTile(3, 4, 0) },
-                { new NormalTile(4, 0, 1), new NormalTile(4, 1, 1), new NormalTile(4, 2, 1), new NormalTile(4, 3, 2), new NormalTile(4, 4, 2) }
-            };
         }
 
         private void InitializeRandomBoard()
@@ -73,12 +60,12 @@ namespace MatchThreeLogic
                 var matchedTiles = GetMatchedTiles(tile);
                 if (matchedTiles.Count == 0)
                     continue;
-        
-                // this might not behave the way I expect
+
                 var hashsetMatches = new HashSet<BaseTile>(matchedTiles);
                 if (!matches.Any(m => hashsetMatches.SetEquals(new HashSet<BaseTile>(m))))
                     matches.Add(matchedTiles);
             }
+
             //todo => remove duplicates here
             return matches;
         }
@@ -96,34 +83,33 @@ namespace MatchThreeLogic
 
                 var (possibleMatches, definiteMatches) = CheckTwoDimensions(tileToCheck);
                 checkForMatchesMap[tileToCheck] = true;
-                
+
                 foreach (var possibleTile in possibleMatches)
                 {
                     if (!checkForMatchesMap.ContainsKey(possibleTile))
                         checkForMatchesMap.Add(possibleTile, false);
                 }
-                
+
                 foreach (var definiteTile in definiteMatches)
                 {
                     if (!finalTiles.Contains(definiteTile))
                         finalTiles.Add(definiteTile);
                 }
-
             } while (checkForMatchesMap.ContainsValue(false));
 
             return finalTiles.Contains(tile) ? finalTiles : new List<BaseTile>();
 
-            (List<BaseTile> possibleMatches,List<BaseTile> definiteMatches) CheckTwoDimensions(BaseTile tileToCheck)
+            (List<BaseTile> possibleMatches, List<BaseTile> definiteMatches) CheckTwoDimensions(BaseTile tileToCheck)
             {
                 var possible = new HashSet<BaseTile>();
                 var definite = new HashSet<BaseTile>();
 
-                var topTile = GetAdjacentTile(tileToCheck,Direction.Up);
+                var topTile = GetAdjacentTile(tileToCheck, Direction.Up);
                 if (tile.DoesMatch(topTile))
                     possible.Add(topTile);
-                
-                var bottomTile = GetAdjacentTile(tileToCheck,Direction.Down);
-                if (tile.DoesMatch(bottomTile)) 
+
+                var bottomTile = GetAdjacentTile(tileToCheck, Direction.Down);
+                if (tile.DoesMatch(bottomTile))
                     possible.Add(bottomTile);
 
                 if (tileToCheck.DoesMatch(topTile) && tileToCheck.DoesMatch(bottomTile))
@@ -147,8 +133,8 @@ namespace MatchThreeLogic
                     definite.Add(rightTile);
                     definite.Add(leftTile);
                 }
-                
-                return (possible.ToList(),definite.ToList());
+
+                return (possible.ToList(), definite.ToList());
             }
         }
 
@@ -161,7 +147,7 @@ namespace MatchThreeLogic
         {
             if (tile == null)
                 return null;
-            
+
             if (tile.X == 0 && direction is Direction.Up)
                 return null;
 
@@ -194,8 +180,8 @@ namespace MatchThreeLogic
         {
             if (matchedTiles.Count == 0)
                 return;
-            
-            foreach (var tile in matchedTiles) 
+
+            foreach (var tile in matchedTiles)
                 tile.Destroy(this);
 
             Tiles[sourceX, sourceY] = GetNewTileAfterMatch(matchedTiles, sourceX, sourceY);
@@ -203,10 +189,10 @@ namespace MatchThreeLogic
 
         public void Destroy(List<BaseTile> matchedTiles)
         {
-            foreach (var tile in matchedTiles) 
+            foreach (var tile in matchedTiles)
                 tile.Destroy(this);
         }
-        
+
         private BaseTile GetNewTileAfterMatch(List<BaseTile> matchedTiles, int x, int y)
         {
             if (matchedTiles.Count == 3)
@@ -214,16 +200,16 @@ namespace MatchThreeLogic
 
             if (matchedTiles.Count == 4)
                 return new MissileTile(x, y);
-            
+
             if (matchedTiles.Count == 5)
-                return new BombTile(x,y);
-            
+                return new BombTile(x, y);
+
             if (matchedTiles.Count > 5)
-                return new NukeTile(x,y);
+                return new NukeTile(x, y);
 
             throw new Exception("matched tiles is less than 3 which means something went wrong");
         }
-        
+
         public (int, int) MoveTile(int x, int y, Direction direction)
         {
             var targetTile = GetAdjacentTile(Tiles[x, y], direction);
@@ -263,17 +249,19 @@ namespace MatchThreeLogic
                 Tiles[emptyTile.X, emptyTile.Y] = new NormalTile(emptyTile.X, emptyTile.Y,
                     random.Next(0, _settings.NumberOfTileColors));
             }
-            
-            OnUpdated?.Invoke();
-
-            var allMatchedTiles = GetAllMatchedTiles();
-
-            Console.WriteLine(allMatchedTiles.Count);
-            foreach (var matchedTiles in allMatchedTiles)
-                MatchTiles(matchedTiles, matchedTiles.First().X, matchedTiles.First().Y);
 
             OnUpdated?.Invoke();
-            //todo CHECK FOR MATCHES AND TRY AGAIN
+
+            while (GetAllMatchedTiles().Count != 0)
+            {
+                var allMatchedTiles = GetAllMatchedTiles();
+
+                Console.WriteLine(allMatchedTiles.Count);
+                foreach (var matchedTiles in allMatchedTiles)
+                    MatchTiles(matchedTiles, matchedTiles.First().X, matchedTiles.First().Y);
+
+                OnUpdated?.Invoke();
+            }
         }
 
         private List<BaseTile> GetEmptyTiles()
